@@ -11,7 +11,7 @@ public class PlayerController : IInitializable ,ITickable
 
     public void Initialize()
     {
-        
+
     }
 
     public void Tick()
@@ -25,24 +25,26 @@ public class PlayerController : IInitializable ,ITickable
         if(hit && hit.collider.gameObject.layer == 9)
         {
             GameObject CurrentPath = hit.collider.gameObject;
-            if ((LastPath) && (LastPath != CurrentPath)) _path.GetOutOnPath(LastPath);
-            if (CurrentPath)
+            if(CurrentPath.GetComponent<InfoPath>().isBall && CurrentPath.GetComponent<InfoPath>().isActive)
             {
-                _path.HoverOnPath(CurrentPath);
-                LastPath = CurrentPath;
-
-                if (Input.GetKeyDown(KeyCode.Mouse0))
+                if ((LastPath) && (LastPath != CurrentPath)) _path.GetOutOnPath(LastPath);
+                if (CurrentPath)
                 {
-                    _path.DeactivationPath(CurrentPath);
-                    //CurrentPath.GetComponent<InfoPath>().isMoving = true;
-                    _ball.moveBall(CurrentPath);
+                    _path.HoverOnPath(CurrentPath);
+                    LastPath = CurrentPath;
+
+                    if (Input.GetKeyDown(KeyCode.Mouse0))
+                    {
+                        _path.DeactivationPath(CurrentPath);
+                        _ball.moveBall(CurrentPath);
+                    }
+
                 }
             }
-            
         }
         else
         {
-            if (LastPath) _path.GetOutOnPath(LastPath);
+            if (LastPath)   _path.GetOutOnPath(LastPath);
         }
 
     }
