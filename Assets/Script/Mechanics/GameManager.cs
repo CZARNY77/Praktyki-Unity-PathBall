@@ -2,25 +2,29 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public int allPath = 0;
     public float speed = 3f;
     public bool isMoving = false;
+    public bool start = false;
     bool lose = false;
+    bool round = true;
+    [SerializeField] Canvas canv;
     [SerializeField] GameObject panel;
     [SerializeField] GameObject menu;
+    Text[] txt;
 
     private void Start()
     {
-        /*Button btn = menu.GetComponentInChildren<Button>();
-        btn.onClick.AddListener(Resume);
-        */
         Button[] btn;
         btn = menu.GetComponentsInChildren<Button>();
         btn[0].onClick.AddListener(Resume);
         btn[1].onClick.AddListener(Exit);
+        txt = canv.GetComponentsInChildren<Text>();
+        switch_player();
     }
 
     private void Update()
@@ -56,6 +60,22 @@ public class GameManager : MonoBehaviour
     }
     public void Exit()
     {
-        Debug.Log("Exit");
+        SceneManager.LoadScene("Menu", LoadSceneMode.Single);
+    }
+
+    public void switch_player()
+    {
+        if (round)
+        {
+            txt[0].color = new Color(1, 0, 0);
+            txt[1].color = new Color(0, 0, 0);
+            round = false;
+        }
+        else
+        {
+            txt[0].color = new Color(0, 0, 0);
+            txt[1].color = new Color(0, 0, 1);
+            round = true;
+        }
     }
 }

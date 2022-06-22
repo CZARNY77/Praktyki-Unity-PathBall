@@ -16,9 +16,8 @@ public class PlayerController : IInitializable ,ITickable
 
     public void Tick()
     {
-        //---------------------------Zmina koloru po najechaniu---------------------
-
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //Debug.Log(mousePos);
         LayerMask mask = LayerMask.GetMask("Path");
         RaycastHit2D hit = Physics2D.Raycast(mousePos, -Vector2.zero, mask);
        
@@ -36,7 +35,10 @@ public class PlayerController : IInitializable ,ITickable
                     if (Input.GetKeyDown(KeyCode.Mouse0))
                     {
                         _path.DeactivationPath(CurrentPath);
-                        _ball.moveBall(CurrentPath);
+                        _ball.moveBall(CurrentPath, mousePos);
+
+                        CurrentPath.GetComponentInParent<GameManager>().start = true; // <- to to poprawy 
+                        CurrentPath.GetComponentInParent<GameManager>().switch_player();
                     }
 
                 }

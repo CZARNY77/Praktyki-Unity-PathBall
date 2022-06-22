@@ -13,7 +13,7 @@ public class Intersection : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "Ball")
+        if (collision.gameObject.name == "Ball" && gameM.start)
         {
             gameM.check();
             gameM.isMoving = false;
@@ -21,7 +21,7 @@ public class Intersection : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        Debug.Log("Stoje");
+        //Debug.Log("Stoje");
         if(!gameM.isMoving)
             ball.transform.position = Vector3.MoveTowards(ball.transform.position, this.transform.position, 6 * Time.deltaTime);
     }
