@@ -6,6 +6,7 @@ TagManager:
   tags:
   - ship
   - Ball
+  - Intersection
   layers:
   - Default
   - TransparentFX

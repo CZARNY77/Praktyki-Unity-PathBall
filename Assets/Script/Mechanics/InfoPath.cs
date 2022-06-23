@@ -6,7 +6,7 @@ public class InfoPath : MonoBehaviour
 {
     public bool isActive = true;
     public bool isBall = false;
-    public Vector3 direction;
+    public List<GameObject> end = new List<GameObject>();
     GameManager gameM;
 
     private void Start()
@@ -15,11 +15,16 @@ public class InfoPath : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //Debug.Log(this.name);
         if(collision.name == "Ball")
         {
             isBall = true;
         }
         gameM.allPath++;
+        if (collision.tag == "Intersection")
+        {
+            end.Add(collision.gameObject);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)

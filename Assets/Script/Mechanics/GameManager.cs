@@ -4,12 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum stats{
+    Play,
+    Pause
+}
+
 public class GameManager : MonoBehaviour
 {
-    public int allPath = 0;
+    [HideInInspector] public int allPath = 0;
     public float speed = 3f;
-    public bool isMoving = false;
-    public bool start = false;
+     public bool isMoving = false;
+     public bool start = false;
     bool lose = false;
     bool round = true;
     [SerializeField] Canvas canv;

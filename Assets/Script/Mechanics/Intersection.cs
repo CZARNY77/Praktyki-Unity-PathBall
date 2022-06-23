@@ -21,8 +21,7 @@ public class Intersection : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        //Debug.Log("Stoje");
-        if(!gameM.isMoving)
-            ball.transform.position = Vector3.MoveTowards(ball.transform.position, this.transform.position, 6 * Time.deltaTime);
+        if(!gameM.isMoving && collision.name == "Ball" && !gameM.start)
+            ball.transform.position = Vector3.MoveTowards(ball.transform.position, this.transform.position, gameM.speed * Time.deltaTime);
     }
 }

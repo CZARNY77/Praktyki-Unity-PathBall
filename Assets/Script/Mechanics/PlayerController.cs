@@ -24,7 +24,7 @@ public class PlayerController : IInitializable ,ITickable
         if(hit && hit.collider.gameObject.layer == 9)
         {
             GameObject CurrentPath = hit.collider.gameObject;
-            if(CurrentPath.GetComponent<InfoPath>().isBall && CurrentPath.GetComponent<InfoPath>().isActive)
+            if(CurrentPath.GetComponent<InfoPath>().isBall && CurrentPath.GetComponent<InfoPath>().isActive && !CurrentPath.GetComponentInParent<GameManager>().isMoving)
             {
                 if ((LastPath) && (LastPath != CurrentPath)) _path.GetOutOnPath(LastPath);
                 if (CurrentPath)
@@ -35,10 +35,12 @@ public class PlayerController : IInitializable ,ITickable
                     if (Input.GetKeyDown(KeyCode.Mouse0))
                     {
                         _path.DeactivationPath(CurrentPath);
-                        _ball.moveBall(CurrentPath, mousePos);
+                        _ball.moveBall(CurrentPath);
 
                         CurrentPath.GetComponentInParent<GameManager>().start = true; // <- to to poprawy 
                         CurrentPath.GetComponentInParent<GameManager>().switch_player();
+
+                        
                     }
 
                 }

@@ -6,7 +6,7 @@ using Zenject;
 public class Ball : ITickable
 {
     GameObject ball;
-    GameObject path;
+    GameManager gameM;
 
     Vector3 direction;
 
@@ -14,23 +14,32 @@ public class Ball : ITickable
     {
         ball = Ball;
     }
-    public void moveBall(GameObject curretPath, Vector2 mousePos)
+    public void moveBall(GameObject curretPath)
     {
-        curretPath.GetComponentInParent<GameManager>().isMoving = true;
-        path = curretPath;
-        direction = new Vector3(mousePos.x, mousePos.y, -0.03f) - ball.transform.position;
-        //Debug.Log(direction + "");
+        gameM = curretPath.GetComponentInParent<GameManager>();
+        gameM.isMoving = true;
+
+        if (curretPath.GetComponent<InfoPath>().end[0].transform.position == ball.transform.position)
+        {
+            Debug.Log("jej");
+            direction = curretPath.GetComponent<InfoPath>().end[1].transform.position;
+        }
+        else if (curretPath.GetComponent<InfoPath>().end[1].transform.position == ball.transform.position)
+        {
+            Debug.Log("jej");
+            direction = curretPath.GetComponent<InfoPath>().end[0].transform.position;
+        }
+        Debug.Log(direction);
     }
 
     public void Tick()
     {
-        if (path != null)
+        if (gameM != null)
         {
-            if (path.GetComponentInParent<GameManager>().isMoving)
+            //if (gameM.isMoving)
             {
-                ball.transform.position += direction * Time.deltaTime * 5;
+                ball.transform.position = Vector3.MoveTowards(ball.transform.position, direction, gameM.speed * Time.deltaTime);
             }
-            //Debug.Log(Vector3.Distance(lastPosition, ball.transform.position));   path.GetComponent<InfoPath>().
         }
     }
 }

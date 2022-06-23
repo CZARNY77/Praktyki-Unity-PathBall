@@ -6,15 +6,26 @@ using UnityEngine.SceneManagement;
 
 public class btn_play : MonoBehaviour
 {
+    public GameObject panel;
+    public GameObject panel_play;
     Button btn;
     void Start()
     {
         btn = GetComponent<Button>();
-        btn.onClick.AddListener(load_lvl);
+        btn.onClick.AddListener(next_page);
     }
 
-    void load_lvl()
+    void next_page()
     {
-        SceneManager.LoadScene("lvl", LoadSceneMode.Single);
+        if (panel.activeSelf)
+        {
+            panel.SetActive(false);
+            panel_play.SetActive(true);
+        }
+        else
+        {
+            panel.SetActive(true);
+            panel_play.SetActive(false);
+        }
     }
 }
