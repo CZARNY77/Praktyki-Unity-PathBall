@@ -21,7 +21,7 @@ public class Gate : MonoBehaviour
         if(collision.gameObject.name == "Ball")
         {
             gameM.isMoving = false;
-
+            gameM._state = State.Pause;
             if (player == Players.Player_1) gameM.win(player);
             else if (player == Players.Player_2) gameM.win(player);
         }
