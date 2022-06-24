@@ -16,20 +16,24 @@ public class PlayerController : IInitializable ,ITickable
 
     public void Tick()
     {
+        //przerób na ³adny kod
+
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //Debug.Log(mousePos);
         LayerMask mask = LayerMask.GetMask("Path");
         RaycastHit2D hit = Physics2D.Raycast(mousePos, -Vector2.zero, mask);
        
         if(hit && hit.collider.gameObject.layer == 9)
         {
             GameObject CurrentPath = hit.collider.gameObject;
-            if(CurrentPath.GetComponent<InfoPath>().isBall && CurrentPath.GetComponent<InfoPath>().isActive && !CurrentPath.GetComponentInParent<GameManager>().isMoving)
+            GameManager gameM = CurrentPath.GetComponentInParent<GameManager>();
+            InfoPath infoP = CurrentPath.GetComponentInParent<InfoPath>();
+
+            if (infoP.isBall && infoP.isActive && !gameM.isMoving && gameM._state == State.Play)
             {
                 if ((LastPath) && (LastPath != CurrentPath)) _path.GetOutOnPath(LastPath);
                 if (CurrentPath)
                 {
-                    _path.HoverOnPath(CurrentPath);
+                    _path.HoverOnPath(CurrentPath, gameM);
                     LastPath = CurrentPath;
 
                     if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -37,8 +41,8 @@ public class PlayerController : IInitializable ,ITickable
                         _path.DeactivationPath(CurrentPath);
                         _ball.moveBall(CurrentPath);
 
-                        CurrentPath.GetComponentInParent<GameManager>().start = true; // <- to to poprawy 
-                        CurrentPath.GetComponentInParent<GameManager>().switch_player();
+                        gameM.start = true; // <- to to poprawy 
+                        gameM.switch_player();
 
                         
                     }

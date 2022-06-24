@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum stats{
+public enum State{
     Play,
     Pause
 }
@@ -15,8 +15,9 @@ public class GameManager : MonoBehaviour
     public float speed = 3f;
      public bool isMoving = false;
      public bool start = false;
+    [HideInInspector] public State _state = State.Play;
     bool lose = false;
-    bool round = true;
+    [HideInInspector] public bool round = true;
     [SerializeField] Canvas canv;
     [SerializeField] GameObject panel;
     [SerializeField] GameObject menu;
@@ -36,16 +37,24 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if(menu.activeSelf)
+            if (menu.activeSelf)
+            {
                 menu.SetActive(false);
+                _state = State.Play;
+            }
+                
             else
+            {
                 menu.SetActive(true);
+                _state = State.Pause;
+            }
+                
         }
     }
 
     public void win(Players player)
     {
-        panel.GetComponentInChildren<Text>().text = "Wygrywa: " + player;
+        panel.GetComponentInChildren<Text>().text = "Wygrywa:\n" + player;
         panel.SetActive(true);
     }
 

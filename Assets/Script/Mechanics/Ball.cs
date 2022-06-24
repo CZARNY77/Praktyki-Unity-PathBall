@@ -21,15 +21,12 @@ public class Ball : ITickable
 
         if (curretPath.GetComponent<InfoPath>().end[0].transform.position == ball.transform.position)
         {
-            Debug.Log("jej");
             direction = curretPath.GetComponent<InfoPath>().end[1].transform.position;
         }
         else if (curretPath.GetComponent<InfoPath>().end[1].transform.position == ball.transform.position)
         {
-            Debug.Log("jej");
             direction = curretPath.GetComponent<InfoPath>().end[0].transform.position;
         }
-        Debug.Log(direction);
     }
 
     public void Tick()

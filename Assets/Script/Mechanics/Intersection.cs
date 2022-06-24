@@ -16,12 +16,14 @@ public class Intersection : MonoBehaviour
         if (collision.gameObject.name == "Ball" && gameM.start)
         {
             gameM.check();
-            gameM.isMoving = false;
+            //gameM.isMoving = false;
         }
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
         if(!gameM.isMoving && collision.name == "Ball" && !gameM.start)
             ball.transform.position = Vector3.MoveTowards(ball.transform.position, this.transform.position, gameM.speed * Time.deltaTime);
+        if (gameM && ball.transform.position == transform.position)
+            gameM.isMoving = false;
     }
 }
